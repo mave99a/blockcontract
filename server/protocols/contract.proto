@@ -1,0 +1,20 @@
+syntax = "proto3";
+package forge_contract_abi;
+
+import "google/protobuf/timestamp.proto";
+
+message Signature {
+  string name = 1;
+  string email = 2;
+  string signer = 3;
+  google.protobuf.Timestamp signed_at = 4;
+  bytes signature = 5;
+}
+message Contract {
+  // did of the contract that stored in the forge contract app
+  string did = 1;
+  // hash of the original contract to be signed
+  string hash = 2;
+  // collected signature list
+  repeated Signature signatures = 3;
+}

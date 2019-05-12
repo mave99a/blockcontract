@@ -1,0 +1,9 @@
+---
+name: contract
+version: 0
+namespace: CoreTx
+description: contract definition for forge
+proto: contract.proto
+type_urls:
+  fc:x:contract: ForgeContractAbi.Contract
+sources: []
