@@ -34,3 +34,4 @@ client/.next
 .cache
 dist
 .vscode
+.env
