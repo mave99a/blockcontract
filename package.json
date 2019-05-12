@@ -53,6 +53,7 @@
     "netlify-lambda": "^1.4.7",
     "next": "^8.1.0",
     "next-plugin-custom-babel-config": "^1.0.2",
+    "nodemailer": "^6.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -61,7 +62,6 @@
     "react-jss": "^8.6.1",
     "react-swipeable-views": "^0.13.3",
     "react-use": "^8.4.0",
-    "sendmail": "^1.4.1",
     "serverless-http": "^2.0.1",
     "styled-components": "^4.2.0",
     "validator": "^10.11.0"

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const mcrypto = require('@arcblock/mcrypto');
 const did = require('@arcblock/did');
-const sendmail = require('sendmail')({ silent: true });
+const { send_emails } = require('../libs/email');
 const { Contract } = require('../models');
 
 const types = mcrypto.types;
@@ -20,32 +20,7 @@ function gen_contract_did(requester, content_hash, signatures) {
   return did.fromPublicKey(data, did_type);
 }
 
-function send_one_email(from, to, subject, html) {
-  return new Promise((res, rej) => {
-    const email = {
-      from,
-      to,
-      replyTo: from,
-      subject,
-      html,
-    };
-    res({});
-    // disable email for now
-    // sendmail(email, (err, reply) => {
-    //   if (err) return rej(err);
-    //   return res(reply);
-    // });
-  });
-}
-
-function send_emails(from, recipients, subject, html) {
-  const all_emails = recipients.map(r => send_one_email(from, r, subject, html));
-  return Promise.all(all_emails);
-}
-
-function get_html(content_bin, signatures) {
-  return 'hello world!';
-}
+const get_url = id => `${process.env.BASE_URL}/contracts/detail?id=${id}`;
 
 module.exports = {
   init(app) {
@@ -73,13 +48,13 @@ module.exports = {
       }
 
       const requester = req.session.user;
-      const signatures = params.signatures;
+      const { signatures, synopsis } = params;
 
       const now = new Date();
       const attrs = {
         _id: content_did,
         requester: requester.did,
-        synopsis: params.synopsis,
+        synopsis,
         content: content_bin,
         hash,
         signatures,
@@ -90,9 +65,14 @@ module.exports = {
 
       await contract.save();
 
-      const html = get_html(content_bin, signatures);
+      const url = get_url(contract._id);
       const recipients = signatures.map(v => v.email);
-      await send_emails(requester.email, recipients, `Please sign:${params.synopsis}`, html);
+      await send_emails(
+        requester.email,
+        recipients,
+        `${requester.name} requests you to sign a contract: ${synopsis}`,
+        url
+      );
       res.json(attrs);
     });
 
