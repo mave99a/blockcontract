@@ -125,7 +125,11 @@ make run
 
 Pages are being added so screen shots will be gradually available:
 
-### Scan QR code to login (provided by Forge React Starter kit)
+### The new frontpage
+
+![Block contract](docs/block_contract.jpg)
+
+### Step 1: Scan QR code to login (provided by Forge React Starter kit)
 
 ![login 1](docs/login1.jpg)
 
@@ -137,6 +141,8 @@ Then you are redirect to profile page. User can see the existing contracts:
 
 ![List contracts](docs/list_contracts.jpg)
 
+### Step 2: Create a new contract
+
 You may want to create a new contract:
 
 ![Create contract](docs/create_contract.jpg)
@@ -145,10 +151,31 @@ And all the signers will go emails like this:
 
 ![Email content](docs/email.jpg)
 
-Below is created by forge-react-starter. Leave it just for your information.
+### Step 3 (for signer): Sign the contract
+
+As a signer, when you got the email, if you click the "View the Contract" button or the link, you will get:
+
+![Sign 1](docs/sign1.jpg)
+
+Then scan the QR code with the wallet app:
+
+![Sign 2](docs/sign2.jpg)
+
+Once accepted, you signature will be put into the agreement. If all parties finished signing, the doc is signed:
+
+![Signed 1](docs/signed1.jpg)
+
+### Step 4 (anyone): Verify the contract in the chain
+
+Then anyone can check the signatures on the chain:
+
+![Signed 2](docs/signed2.jpg)
+
+We could make this view much better later on.
 
 ---
 
+Below is created by forge-react-starter. Leave it just for your information.
 
 ## About Forge React Starter
 

@@ -48,7 +48,6 @@ export default function Header() {
       <div className="nav-left">
         <Link href="/">
           <Typography variant="h6" color="inherit" noWrap className="brand">
-            <img className="logo" src="/static/images/logo.png" alt="arcblock" />
             {process.env.appName}
           </Typography>
         </Link>

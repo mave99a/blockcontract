@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 
 import Wrapper from './wrapper';
 import Header from './header';
-import Footer from './footer';
 
 export default function Layout({ title, children, contentOnly }) {
   if (contentOnly) {
@@ -22,9 +21,6 @@ export default function Layout({ title, children, contentOnly }) {
         </Wrapper>
       </AppBar>
       <Wrapper style={{ minHeight: '60vh' }}>{children}</Wrapper>
-      <Wrapper>
-        <Footer />
-      </Wrapper>
     </Container>
   );
 }
