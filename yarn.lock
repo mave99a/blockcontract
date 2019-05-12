@@ -15,10 +15,10 @@
   resolved "https://registry.npmjs.org/@arcblock/did-auth-storage/-/did-auth-storage-0.21.0.tgz#73420d228e24b6b77a489c4f3ad7bba439838fb6"
   integrity sha512-cGDrDiXwrL96qjb5/H3S///9NO7woMzZ7JD5yqBral3hRD9WT49hyyYBaYMFSyK78ongdDbRn4cO9gCX85NhGQ==
 
-"@arcblock/did-auth@latest":
-  version "0.26.7"
-  resolved "https://registry.npmjs.org/@arcblock/did-auth/-/did-auth-0.26.7.tgz#d3131c6a5f21857e7c359281c433944385e10c20"
-  integrity sha512-4v8pJVJA1uemOQw54E83Zk6eIJM8njixa+Hfpq6AE3EaZAOAtfdGrQk3OGSU5CFNR+pTV6RWe04TN3XTyMK7aQ==
+"@arcblock/did-auth@^0.26.9":
+  version "0.26.9"
+  resolved "https://registry.npmjs.org/@arcblock/did-auth/-/did-auth-0.26.9.tgz#eb459068675b3d975395939bf10e1dc67b1dbafe"
+  integrity sha512-B0jRbcIUECWPRASWUnWIW3wVTPC/8vvln29cL+SwpAbIiNMyxMJm2/4NRfR+1I7uoDLHc4Xj3DuQ8mECSSNWLg==
   dependencies:
     "@arcblock/did" "^0.26.0"
     "@arcblock/forge-util" "^0.26.0"
@@ -27,7 +27,18 @@
     debug "^4.1.1"
     multibase "^0.6.0"
 
-"@arcblock/did@^0.26.0", "@arcblock/did@latest":
+"@arcblock/did-util@^0.26.5":
+  version "0.26.5"
+  resolved "https://registry.npmjs.org/@arcblock/did-util/-/did-util-0.26.5.tgz#f346aaafa553968b74da24269c2914f2e1db82b3"
+  integrity sha512-7/sdbsuPp+/aehZlsc8PkyV4sL4lCfg/o+IPZuzsTNEi4/V/6WYhnC09Ae3vg1Gm7J8bxTlSC4SiT1WK6fnC4w==
+  dependencies:
+    "@arcblock/did" "^0.26.0"
+    "@arcblock/forge-message" "^0.26.0"
+    "@arcblock/forge-util" "^0.26.0"
+    "@arcblock/forge-wallet" "^0.26.0"
+    "@arcblock/mcrypto" "^0.26.0"
+
+"@arcblock/did@^0.26.0":
   version "0.26.0"
   resolved "https://registry.npmjs.org/@arcblock/did/-/did-0.26.0.tgz#ef573ebdcb7075f4714d35d5872a22d427908c18"
   integrity sha512-6CYB9QYxtXFi7yp9T0o26026IwukOzTsRwT4cpjfdp0crjmc03vHqf5JG0pU7hlbII1HBygDjg7/YJFDoRM4Pg==
@@ -110,19 +121,19 @@
     randombytes "^2.0.6"
     tweetnacl "^1.0.1"
 
-"@arcblock/react-forge@latest":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@arcblock/react-forge/-/react-forge-0.2.0.tgz#9082c6a420c7e5c4fedf2fb4eb24ac3a6f633805"
-  integrity sha512-VeTJZfuWH+nB7pB+aDRgPOXqch89nSSkJWXBUsNAJEPu2Wlvjb28e20G3vuzXIddcfeh/Z+u3+YyE6Yin7uQqg==
+"@arcblock/react-forge@0.4.1":
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/@arcblock/react-forge/-/react-forge-0.4.1.tgz#6ab113681bd9f2664f6f6e72702bd63f07cb28ea"
+  integrity sha512-vgLA5Jp+QhRHtCPEoj1SVTLJ45aZBFqNjsZbhI/P9+FdjTd/j2+ag4jlZ//kUmk1yz6YXg+ESCPvnxKCX80MHA==
   dependencies:
-    "@arcblock/react-hooks" "^0.2.0"
+    "@arcblock/react-hooks" "^0.4.1"
     qrcode.react "^0.9.3"
     react-load-script "^0.0.6"
 
-"@arcblock/react-hooks@^0.2.0", "@arcblock/react-hooks@latest":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@arcblock/react-hooks/-/react-hooks-0.2.0.tgz#f13c7cbe16095ee7c187bd4ebbcb01eb85fc3f17"
-  integrity sha512-QSxQTce5zblRd8JBIMwnJ0eV2N7gAs73WGQWaeUsJHukcNwgDByat3RVvs+38Alhtz4hfWlxXAdvt+X5ruKeHA==
+"@arcblock/react-hooks@0.4.1", "@arcblock/react-hooks@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/@arcblock/react-hooks/-/react-hooks-0.4.1.tgz#d47a9066c8e99e6c3cdbd8f445996ed4e9d43a03"
+  integrity sha512-T7tY3Qy30aAQY2Gxbi4EPcizZtEurSHvi2TPjcKwG15jUSQ8FbEzwS4eZ9H70J+jO7fha1aA8MwPQ48AZ1fynw==
   dependencies:
     qrcode.react "^0.9.3"
     react-load-script "^0.0.6"

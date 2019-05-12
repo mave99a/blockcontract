@@ -5,7 +5,7 @@ module.exports = {
   action: 'login',
   claims: {
     profile: () => ({
-      fields: ['fullName', 'email', 'phone'],
+      fields: ['fullName', 'email'],
       description: 'Please provide your email and name to continue',
     }),
   },

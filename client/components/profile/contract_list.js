@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import CheckIcon from '@material-ui/icons/CheckCircle';
-import WaitIcon from '@material-ui/icons/HourglassFull';
+import WaitIcon from '@material-ui/icons/HourglassEmpty';
 
 import EnhancedTable from './enhanced_table';
 
@@ -39,7 +39,7 @@ function ContractList({ contracts, timeFn, timeHeader, action, theme }) {
         )}
       </TableCell>
       <TableCell width="10%" align="center">
-        <Button href={`/contracts/detail?id=${contract._id}`} variant="outlined" size="small" color="primary">
+        <Button href={`/contracts/detail?contractId=${contract._id}`} variant="outlined" size="small" color="primary">
           {action}
         </Button>
       </TableCell>

@@ -7,6 +7,7 @@ import useAsyncFn from 'react-use/lib/useAsyncFn';
 import SwipeableViews from 'react-swipeable-views';
 import List from '@material-ui/core/List';
 import Badge from '@material-ui/core/Badge';
+import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
@@ -18,6 +19,7 @@ import Avatar from '@arcblock/react-forge/lib/Avatar';
 
 import Layout from '../components/layout';
 import ContractList from '../components/profile/contract_list';
+import DidLink from '../components/did_link';
 
 import useSession from '../hooks/session';
 import api from '../libs/api';
@@ -74,7 +76,7 @@ export default function ProfilePage() {
     signed: [],
     pending: [],
   };
-  const { did, email, name = '-', mobile = '-' } = session.value.user;
+  const { did, email, name = '-' } = session.value.user;
   if (contracts.value) {
     grouped.created = contracts.value.filter(x => x.requester === did);
     grouped.signed = contracts.value.filter(x => x.finished && x.signatures.find(s => s.email === email));
@@ -83,13 +85,13 @@ export default function ProfilePage() {
 
   return (
     <Layout title="Profile">
-      <Main>
-        <div className="avatar">
+      <Main container spacing={40}>
+        <Grid item xs={4} sm={3} className="avatar">
           <div className="profile">
             <Avatar size={240} did={did} />
             <List>
               <ListItem className="profile-item">
-                <ListItemText primary={did.split(':').pop()} secondary="DID" />
+                <ListItemText primary={<DidLink did={did} />} secondary="DID" />
               </ListItem>
               <ListItem className="profile-item">
                 <ListItemText primary={name || '-'} secondary="Name" />
@@ -97,16 +99,13 @@ export default function ProfilePage() {
               <ListItem className="profile-item">
                 <ListItemText primary={email || '-'} secondary="Email" />
               </ListItem>
-              <ListItem className="profile-item">
-                <ListItemText primary={mobile || '-'} secondary="Phone" />
-              </ListItem>
             </List>
           </div>
           <Button color="secondary" variant="outlined" onClick={onLogout}>
             Logout
           </Button>
-        </div>
-        <div className="contracts">
+        </Grid>
+        <Grid item xs={8} sm={9} className="contracts">
           <Typography component="h3" variant="h4" className="page-header">
             Contracts
           </Typography>
@@ -122,7 +121,7 @@ export default function ProfilePage() {
               label={
                 grouped.pending.length > 0 ? (
                   <Badge badgeContent={grouped.pending.length} color="secondary">
-                    <Typography component="span" style={{ padding: '0 16px' }}>
+                    <Typography component="span" style={{ padding: '0 10px' }}>
                       Pending for Sign
                     </Typography>
                   </Badge>
@@ -155,19 +154,18 @@ export default function ProfilePage() {
               action="Sign"
             />
           </SwipeableViews>
-        </div>
+        </Grid>
       </Main>
     </Layout>
   );
 }
 
-const Main = styled.main`
-  margin: 80px 0;
-  display: flex;
+const Main = styled(Grid)`
+  && {
+    margin: 80px 0;
+  }
 
   .avatar {
-    width: 320px;
-    margin-right: 80px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

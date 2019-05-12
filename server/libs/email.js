@@ -281,19 +281,7 @@ const email_template = (subject, url) => `
 </html>
 `;
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-function get_html(subject, url) {
-  return 'hello world!';
-}
-
-function send_one_email(from, to, subject, url) {
+function send_one_email(from, to, subject, url, transporter) {
   return new Promise((res, rej) => {
     const mailOptions = {
       from,
@@ -309,7 +297,15 @@ function send_one_email(from, to, subject, url) {
 }
 
 function send_emails(from, recipients, subject, url) {
-  const all_emails = recipients.map(r => send_one_email(from, r, subject, url));
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const all_emails = recipients.map(r => send_one_email(from, r, subject, url, transporter));
   return Promise.all(all_emails);
 }
 

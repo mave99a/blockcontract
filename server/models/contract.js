@@ -17,9 +17,10 @@ const ContractSchema = new mongoose.Schema({
     },
   ],
   finished: { type: Boolean, default: false },
-  asset_did: { type: String, default: '' },
+  assetDid: { type: String, default: '' },
   createdAt: { type: Date },
   updatedAt: { type: Date },
+  completedAt: { type: Date },
 });
 
 const Contract = mongoose.model('Contract', ContractSchema);

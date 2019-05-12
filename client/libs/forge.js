@@ -8,4 +8,8 @@ if (typeof window === 'object') {
   console.dir(client);
 }
 
+export function getExplorerLink(url) {
+  return `${process.env.chainHost.replace(/\/api$/, '')}/node/explorer${url}`;
+}
+
 export default client;

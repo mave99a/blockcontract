@@ -39,19 +39,23 @@ export default function CreateContract() {
 
   const onSubmit = async data => {
     setCreating(true);
+    setError('');
 
-    // Encode data before sending
-    data.content = Buffer.from(data.content).toString('base64');
-    data.signatures = data.signers.map(x => ({ email: x }));
-    const res = await api.put('/api/contracts', data);
-    console.log(res);
+    try {
+      data.content = Buffer.from(data.content).toString('base64');
+      data.signatures = data.signers.map(x => ({ email: x }));
+      const res = await api.put('/api/contracts', data);
 
-    setCreating(false);
-    if (res.status === 200) {
-      // eslint-disable-next-line no-underscore-dangle
-      window.location.href = `/contracts/detail?id=${res.data._id}`;
-    } else {
-      setError('Error creating contract');
+      setCreating(false);
+      if (res.status === 200) {
+        // eslint-disable-next-line no-underscore-dangle
+        window.location.href = `/contracts/detail?contractId=${res.data._id}`;
+      } else {
+        setError(res.data.error || 'Error creating contract');
+      }
+    } catch (err) {
+      setCreating(false);
+      setError(`Error creating contract: ${err.message}`);
     }
   };
 
