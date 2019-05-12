@@ -133,14 +133,6 @@ After you scanned the QR code with ABT wallet:
 
 ![login 2](docs/login2.jpg)
 
-In mobile app, choose the profile:
-
-![login 3](docs/login3.jpg)
-
-Swap to confirm login, and then succeeded:
-
-![login 4](docs/login4.jpg)
-
 Then you are redirect to profile page. User can see the existing contracts:
 
 ![List contracts](docs/list_contracts.jpg)
