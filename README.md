@@ -14,7 +14,7 @@ The prototype of the flow of the app looks like this:
 
 ## Contract Templates
 
-[Accord Project](https://www.accordproject.org) is a great oprn source tool to generate legal contracts.  The ultimate goal is integrate this project with Accord [Legal Contract Template Studio](https://studio.accordproject.org).
+[Accord Project](https://www.accordproject.org) is a great open source tool to generate legal contracts.  The ultimate goal is integrate this project with Accord [Legal Contract Template Studio](https://studio.accordproject.org).
 
 ## Blockchain
 
@@ -60,7 +60,7 @@ message Signature {
   bytes signature = 5;
 }
 message Contract {
-  // did of the contract that stored in the forge contract app
+  // did of the contract that stored in the Block Contract app
   string did = 1;
   // hash of the original contract to be signed
   string hash = 2;
@@ -71,9 +71,92 @@ message Contract {
 
 ## Run this project from Repo
 
-You need to upgrade your nodejs (`brew upgrade node`) and then `brew install mongodb` (then `brew services start mongodb` to start it). Then `npm uninstall -g @arcblock/forge-cli; npm rebuild; npm install -g @arcblock/forge-cli@0.26.5` to have a good to use node and forge cli, then `forge init`, `forge start`, `forge web start`. Then in the repo, you can do `yarn start`.
+### Install latest nodejs and mongodb
 
-if your local node and forge-cli are already latest version, you can just init and start forge and then `yarn start`.
+```bash
+brew upgrade node
+brew install mongodb
+brew services start mongodb
+```
+
+### Install latest forge-cli and init forge
+
+```bash
+npm install -g @arcblock/forge-cli
+forge init
+forge join https://contract.abtnetwork.io/api
+forge start
+forge web start
+```
+
+### Start the Block Contract app
+
+```bash
+cd block-contract
+make dep
+```
+
+Before running the app, you need to put a `.env` file into your repo:
+
+```bash
+cat > .env
+MONGO_URI="mongodb://127.0.0.1:27017/block-contract"
+COOKIE_SECRET="0x6721a1883a8a9c08ea431a6528faf4c1a220194e8a3c0bed6159fd9737b4b7db"
+CHAIN_ID="contract-2019-05-12"
+CHAIN_HOST="https://contract.abtnetwork.io/api"
+APP_NAME="Block Contract"
+APP_PORT="3030"
+APP_SK="0x93d1b3a3a75fd5d0a989bf91958442e15896e0c1cfa6a0d542a47861fdc8559e6721a1883a8a9c08ea431a6528faf4c1a220194e8a3c0bed6159fd9737b4b7db"
+APP_ID="zNKgNRoV2s12JBsEB9dCc6RiqGYt5JHKRxqv"
+EMAIL_USER="<your gmail address>"
+EMAIL_PASS="<your gmail password>"
+BASE_URL="http://<your-private-ip>:3030"
+```
+
+Note that you need to put your gmail user/pass and tune the BASE_URL here.
+
+Make sure that you have your cellphone installed [ABT Wallet](https://abtwallet.io/en/) and it is under the same WIFI as your laptop running the app. Then:
+
+```bash
+make run
+```
+
+## Screen Shots
+
+Pages are being added so screen shots will be gradually available:
+
+### Scan QR code to login (provided by Forge React Starter kit)
+
+![login 1](docs/login1.jpg)
+
+After you scanned the QR code with ABT wallet:
+
+![login 2](docs/login2.jpg)
+
+In mobile app, choose the profile:
+
+![login 3](docs/login3.jpg)
+
+Swap to confirm login, and then succeeded:
+
+![login 4](docs/login4.jpg)
+
+Then you are redirect to profile page. User can see the existing contracts:
+
+![List contracts](docs/list_contracts.jpg)
+
+You may want to create a new contract:
+
+![Create contract](docs/create_contract.jpg)
+
+And all the signers will go emails like this:
+
+![Email content](docs/email.jpg)
+
+Below is created by forge-react-starter. Leave it just for your information.
+
+---
+
 
 ## About Forge React Starter
 

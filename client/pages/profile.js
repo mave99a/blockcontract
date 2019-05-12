@@ -1,9 +1,12 @@
+/* eslint-disable object-curly-newline */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useAsync from 'react-use/lib/useAsync';
+import Cookie from 'js-cookie';
+import useAsyncFn from 'react-use/lib/useAsyncFn';
 
 import SwipeableViews from 'react-swipeable-views';
 import List from '@material-ui/core/List';
+import Badge from '@material-ui/core/Badge';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
@@ -21,15 +24,16 @@ import api from '../libs/api';
 
 export default function ProfilePage() {
   const [category, setCategory] = useState(0);
+  const [isContractsLoaded, setContractsLoaded] = useState(false);
   const session = useSession();
-  const contracts = useAsync(async () => {
+  const [contracts, fetchContracts] = useAsyncFn(async () => {
     const res = await api.get('/api/contracts');
     if (res.status === 200) {
       return res.data;
     }
 
     return [];
-  });
+  }, [session.value]);
 
   const onLogout = async () => {
     await api.post('/api/logout');
@@ -38,7 +42,7 @@ export default function ProfilePage() {
 
   if (session.loading || !session.value) {
     return (
-      <Layout title="Payment">
+      <Layout title="Profile">
         <Main>
           <CircularProgress />
         </Main>
@@ -48,15 +52,21 @@ export default function ProfilePage() {
 
   if (session.error) {
     return (
-      <Layout title="Payment">
+      <Layout title="Profile">
         <Main>{session.error.message}</Main>
       </Layout>
     );
   }
 
   if (!session.value.user) {
+    Cookie.set('login_redirect', window.location.href);
     window.location.href = '/?openLogin=true';
     return null;
+  }
+
+  if (!isContractsLoaded) {
+    fetchContracts();
+    setContractsLoaded(true);
   }
 
   const grouped = {
@@ -70,7 +80,6 @@ export default function ProfilePage() {
     grouped.signed = contracts.value.filter(x => x.finished && x.signatures.find(s => s.email === email));
     grouped.pending = contracts.value.filter(x => !x.finished && x.signatures.find(s => s.email === email));
   }
-  console.log({ contracts: contracts.value, grouped });
 
   return (
     <Layout title="Profile">
@@ -109,7 +118,19 @@ export default function ProfilePage() {
             onChange={(e, v) => setCategory(v)}>
             <Tab label="Created By Me" />
             <Tab label="Signed By Me" />
-            <Tab label="Pending for Sign" />
+            <Tab
+              label={
+                grouped.pending.length > 0 ? (
+                  <Badge badgeContent={grouped.pending.length} color="secondary">
+                    <Typography component="span" style={{ padding: '0 16px' }}>
+                      Pending for Sign
+                    </Typography>
+                  </Badge>
+                ) : (
+                  'Pending for Sign'
+                )
+              }
+            />
           </Tabs>
           <SwipeableViews index={category} onChangeIndex={v => setCategory(v)}>
             <ContractList

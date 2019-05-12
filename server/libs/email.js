@@ -211,7 +211,7 @@ const email_template = (subject, url) => `
           <!-- Logo -->
           <tr>
             <td class="email-masthead">
-              <a class="email-masthead_name">Forge Contract</a>
+              <a class="email-masthead_name">Block Contract</a>
             </td>
           </tr>
           <!-- Email Body -->
@@ -239,7 +239,7 @@ const email_template = (subject, url) => `
                       </tr>
                     </table>
                     <p>Thanks,
-                      <br>The Forge Contract Team</p>
+                      <br>The Block Contract Team</p>
                     <!-- Sub copy -->
                     <table class="body-sub">
                       <tr>
@@ -265,7 +265,7 @@ const email_template = (subject, url) => `
                 <tr>
                   <td class="content-cell">
                     <p class="sub center">
-                      Forge Contract App Team
+                      Block Contract App Team
                     </p>
                   </td>
                 </tr>

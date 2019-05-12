@@ -77,20 +77,45 @@ module.exports = {
     });
 
     app.get('/api/contracts', async (req, res) => {
-      console.log(req.session.user);
-      const contracts = await Contract.find({
-        $or: [{ 'signatures.email': req.session.user.email }, { requester: req.session.user.did }],
-      });
-      res.json(contracts ? contracts.map(c => c.toObject()) : []);
+      if (!req.session.user) {
+        res.status(403).json({ error: 'Login required' });
+        return;
+      }
+
+      try {
+        const contracts = await Contract.find({
+          $or: [{ 'signatures.email': req.session.user.email }, { requester: req.session.user.did }],
+        });
+        res.json(contracts ? contracts.map(c => c.toObject()) : []);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
+      }
     });
 
     app.get('/api/contracts/:contractId', async (req, res) => {
+      if (!req.session.user) {
+        res.status(403).json({ error: 'Login required' });
+        return;
+      }
+
       try {
         const contract = await Contract.findById(req.params.contractId);
-        res.json(contract);
+        // only signer and requester can view this contract
+        if (contract) {
+          const isRequester = contract.requester === req.session.user.did;
+          const isSigner = contract.signatures.find(x => x.email === req.session.user.email);
+          if (isRequester || isSigner) {
+            res.json(contract);
+          } else {
+            res.status(403).json({ error: 'Forbidden' });
+          }
+        } else {
+          res.status(404).json({ error: 'Contract not found' });
+        }
       } catch (err) {
         console.error(err);
-        res.status(404).json(null);
+        res.status(500).json({ error: 'Internal server error' });
       }
     });
   },

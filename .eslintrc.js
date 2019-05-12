@@ -33,6 +33,7 @@ module.exports = {
         props: false,
       },
     ],
+    'max-len': ['error', { code: 120 }],
   },
   globals: {
     logger: true,

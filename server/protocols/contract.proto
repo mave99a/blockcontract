@@ -11,7 +11,7 @@ message Signature {
   bytes signature = 5;
 }
 message Contract {
-  // did of the contract that stored in the forge contract app
+  // did of the contract that stored in the Block Contract app
   string did = 1;
   // hash of the original contract to be signed
   string hash = 2;

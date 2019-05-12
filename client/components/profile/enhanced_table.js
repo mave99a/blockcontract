@@ -22,7 +22,7 @@ export default function EnhancedTable({ rows, headers, page, rowsPerPage, render
         <TableHead>
           <TableRow>
             {headers.concat(['Action']).map((x, i) => (
-              <TableCell key={x} align={i === headers.length ? 'center' : 'left'}>
+              <TableCell key={x} align={i >= headers.length - 1 ? 'center' : 'left'}>
                 {x}
               </TableCell>
             ))}

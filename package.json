@@ -23,7 +23,7 @@
   "dependencies": {
     "@arcblock/did": "latest",
     "@arcblock/did-auth": "latest",
-    "@arcblock/did-auth-storage-mongo": "0.20.3",
+    "@arcblock/did-auth-storage-mongo": "0.21.0",
     "@arcblock/forge-util": "latest",
     "@arcblock/forge-wallet": "latest",
     "@arcblock/graphql-client": "latest",
