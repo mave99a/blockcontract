@@ -59,6 +59,7 @@
     "react-helmet": "^5.2.1",
     "react-hook-form": "^3.4.1",
     "react-jss": "^8.6.1",
+    "react-swipeable-views": "^0.13.3",
     "react-use": "^8.4.0",
     "sendmail": "^1.4.1",
     "serverless-http": "^2.0.1",

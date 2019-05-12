@@ -98,7 +98,9 @@ module.exports = {
 
     app.get('/api/contracts', async (req, res) => {
       console.log(req.session.user);
-      const contracts = await Contract.find({ 'signatures.email': req.session.user.email });
+      const contracts = await Contract.find({
+        $or: [{ 'signatures.email': req.session.user.email }, { requester: req.session.user.did }],
+      });
       res.json(contracts ? contracts.map(c => c.toObject()) : []);
     });
 

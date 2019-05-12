@@ -23,7 +23,7 @@ function range(length) {
 let defaults = {
   synopsis: 'Test Contract Summary',
   content: `Test Contract Content: ${Date.now()}:${Math.random()}`,
-  signers: ['shijun@arcblock.io', 'wangshijun2010@gmail.com'],
+  signers: [],
 };
 
 if (process.env.NODE_ENV === 'production') {

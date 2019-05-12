@@ -12,6 +12,16 @@ The prototype of the flow of the app looks like this:
 
 ![prototype](docs/prototype.jpg)
 
+## Contract Templates
+
+![Accord Project](https://www.accordproject.org) is a great oprn source tool to generate legal contracts.  The ultimate goal is integrate this project with Accord ![Legal Contract Template Studio](https://studio.accordproject.org).
+
+## Blockchain
+
+We will use ArcBlock's ForgeFrame to build a custom blockchain for this project's demo.  The block explorer lives here: ![Block Contract Block Explorer](https://contract.abtnetwork.io/dashboard)
+
+It's possible to use other blockchains, such as Ethereum, Bitcoin to record the contract through Open Chain Access Protocol (OCAP), but it will be limited in features. 
+
 ## DB schema for contract
 
 For contract created by the user, we store it as the following schema in mongo:
@@ -59,6 +69,11 @@ message Contract {
 }
 ```
 
+## Run this project from Repo
+
+You need to upgrade your nodejs (`brew upgrade node`) and then `brew install mongodb` (then `brew services start mongodb` to start it). Then `npm uninstall -g @arcblock/forge-cli; npm rebuild; npm install -g @arcblock/forge-cli@0.26.5` to have a good to use node and forge cli, then `forge init`, `forge start`, `forge web start`. Then in the repo, you can do `yarn start`.
+
+if your local node and forge-cli are already latest version, you can just init and start forge and then `yarn start`.
 
 ## About Forge React Starter
 

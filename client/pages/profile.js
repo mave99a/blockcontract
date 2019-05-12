@@ -1,31 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import useToggle from 'react-use/lib/useToggle';
+import useAsync from 'react-use/lib/useAsync';
 
+import SwipeableViews from 'react-swipeable-views';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Dialog from '@material-ui/core/Dialog';
-import Auth from '@arcblock/react-forge/lib/Auth';
 import Avatar from '@arcblock/react-forge/lib/Avatar';
 
 import Layout from '../components/layout';
+import ContractList from '../components/profile/contract_list';
+
 import useSession from '../hooks/session';
 import api from '../libs/api';
 
 export default function ProfilePage() {
-  const state = useSession();
-  const [isOpen, setOpen] = useToggle(false);
+  const [category, setCategory] = useState(0);
+  const session = useSession();
+  const contracts = useAsync(async () => {
+    const res = await api.get('/api/contracts');
+    if (res.status === 200) {
+      return res.data;
+    }
+
+    return [];
+  });
 
   const onLogout = async () => {
     await api.post('/api/logout');
     window.location.href = '/';
   };
 
-  if (state.loading || !state.value) {
+  if (session.loading || !session.value) {
     return (
       <Layout title="Payment">
         <Main>
@@ -35,56 +46,50 @@ export default function ProfilePage() {
     );
   }
 
-  if (state.error) {
+  if (session.error) {
     return (
       <Layout title="Payment">
-        <Main>{state.error.message}</Main>
+        <Main>{session.error.message}</Main>
       </Layout>
     );
   }
 
-  if (!state.value.user) {
+  if (!session.value.user) {
     window.location.href = '/?openLogin=true';
     return null;
   }
 
+  const grouped = {
+    created: [],
+    signed: [],
+    pending: [],
+  };
+  const { did, email, name = '-', mobile = '-' } = session.value.user;
+  if (contracts.value) {
+    grouped.created = contracts.value.filter(x => x.requester === did);
+    grouped.signed = contracts.value.filter(x => x.finished && x.signatures.find(s => s.email === email));
+    grouped.pending = contracts.value.filter(x => !x.finished && x.signatures.find(s => s.email === email));
+  }
+  console.log({ contracts: contracts.value, grouped });
+
   return (
     <Layout title="Profile">
       <Main>
-        {isOpen && (
-          <Dialog open maxWidth="sm" disableBackdropClick disableEscapeKeyDown onClose={() => setOpen()}>
-            <Auth
-              action="checkin"
-              checkFn={api.get}
-              onClose={() => setOpen()}
-              onSuccess={() => window.location.reload()}
-              messages={{
-                title: 'Get 25 TBA for FREE',
-                scan: 'Scan qrcode to get 25 TBA for FREE',
-                confirm: 'Confirm on your ABT Wallet',
-                success: '25 TBA sent to your account',
-              }}
-            />
-          </Dialog>
-        )}
         <div className="avatar">
-          <Avatar size={240} did={state.value.user.did} />
           <div className="profile">
-            <Typography component="h3" variant="h4">
-              Profile
-            </Typography>
+            <Avatar size={240} did={did} />
             <List>
               <ListItem className="profile-item">
-                <ListItemText primary={state.value.user.did} secondary="DID" />
+                <ListItemText primary={did.split(':').pop()} secondary="DID" />
               </ListItem>
               <ListItem className="profile-item">
-                <ListItemText primary={state.value.user.name || '-'} secondary="Name" />
+                <ListItemText primary={name || '-'} secondary="Name" />
               </ListItem>
               <ListItem className="profile-item">
-                <ListItemText primary={state.value.user.email || '-'} secondary="Email" />
+                <ListItemText primary={email || '-'} secondary="Email" />
               </ListItem>
               <ListItem className="profile-item">
-                <ListItemText primary={state.value.user.mobile || '-'} secondary="Phone" />
+                <ListItemText primary={mobile || '-'} secondary="Phone" />
               </ListItem>
             </List>
           </div>
@@ -92,7 +97,44 @@ export default function ProfilePage() {
             Logout
           </Button>
         </div>
-        <div className="contracts">Created By Me/Signed By Me/Need my sign</div>
+        <div className="contracts">
+          <Typography component="h3" variant="h4" className="page-header">
+            Contracts
+          </Typography>
+          <Tabs
+            value={category}
+            indicatorColor="primary"
+            textColor="primary"
+            className="tabs"
+            onChange={(e, v) => setCategory(v)}>
+            <Tab label="Created By Me" />
+            <Tab label="Signed By Me" />
+            <Tab label="Pending for Sign" />
+          </Tabs>
+          <SwipeableViews index={category} onChangeIndex={v => setCategory(v)}>
+            <ContractList
+              key="created"
+              contracts={grouped.created}
+              timeFn={x => x.createdAt}
+              timeHeader="Created At"
+              action="View"
+            />
+            <ContractList
+              key="signed"
+              contracts={grouped.signed}
+              timeFn={x => x.signatures.find(s => s.email === email).signedAt}
+              timeHeader="Signed At"
+              action="View"
+            />
+            <ContractList
+              key="pending"
+              contracts={grouped.pending}
+              timeFn={x => x.createdAt}
+              timeHeader="Requested At"
+              action="Sign"
+            />
+          </SwipeableViews>
+        </div>
       </Main>
     </Layout>
   );
@@ -103,6 +145,7 @@ const Main = styled.main`
   display: flex;
 
   .avatar {
+    width: 320px;
     margin-right: 80px;
     display: flex;
     flex-direction: column;
@@ -112,6 +155,11 @@ const Main = styled.main`
     svg {
       margin-bottom: 40px;
     }
+  }
+
+  .page-header,
+  .tabs {
+    margin-bottom: 24px;
   }
 
   .profile {
@@ -127,5 +175,6 @@ const Main = styled.main`
   }
 
   .contracts {
+    flex-grow: 1;
   }
 `;
