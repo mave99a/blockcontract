@@ -14,13 +14,13 @@ The prototype of the flow of the app looks like this:
 
 ## Contract Templates
 
-![Accord Project](https://www.accordproject.org) is a great oprn source tool to generate legal contracts.  The ultimate goal is integrate this project with Accord ![Legal Contract Template Studio](https://studio.accordproject.org).
+[Accord Project](https://www.accordproject.org) is a great oprn source tool to generate legal contracts.  The ultimate goal is integrate this project with Accord [Legal Contract Template Studio](https://studio.accordproject.org).
 
 ## Blockchain
 
-We will use ArcBlock's ForgeFrame to build a custom blockchain for this project's demo.  The block explorer lives here: ![Block Contract Block Explorer](https://contract.abtnetwork.io/dashboard)
+We will use ArcBlock's ForgeFrame to build a custom blockchain for this project's demo.  The block explorer lives here: [Block Contract Block Explorer](https://contract.abtnetwork.io/dashboard)
 
-It's possible to use other blockchains, such as Ethereum, Bitcoin to record the contract through Open Chain Access Protocol (OCAP), but it will be limited in features. 
+It's possible to use other blockchains, such as Ethereum, Bitcoin to record the contract through Open Chain Access Protocol (OCAP), but it will be limited in features.
 
 ## DB schema for contract
 
